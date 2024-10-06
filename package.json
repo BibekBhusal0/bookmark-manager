@@ -13,11 +13,21 @@
   },
   "type": "module",
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.2",
+    "@reduxjs/toolkit": "^2.2.7",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-grid-layout": "^1.4.4",
+    "react-redux": "^9.1.2",
+    "tailwind-merge": "^2.5.3",
     "webextension-polyfill": "^0.11.0"
   },
   "devDependencies": {
+    "@iconify/react": "^5.0.2",
     "@crxjs/vite-plugin": "^2.0.0-beta.23",
     "@types/chrome": "^0.0.268",
     "@types/node": "^20.12.11",
