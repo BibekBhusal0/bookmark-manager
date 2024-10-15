@@ -3,10 +3,13 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'spin-slow': 'spin 20s linear infinite',
-      }
+        "spin-slow": "spin 20s linear infinite",
+      },
     },
   },
-  prefix: '',
-  plugins: [],
-}
+  prefix: "",
+  plugins: [
+    require("@xpd/tailwind-3dtransforms"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
+  ],
+};
