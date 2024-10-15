@@ -9,6 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { faviconURL } from "@src/lib/fabiconURL";
 
 export interface TakeBookmarksProps {
   bookmarks:
@@ -53,7 +54,12 @@ function BookmarkTreeLink({
         className="flex items-center gap-4 my-4"
         href={bookmarks.url}
         target="_blank">
-        <div className="size-10 aspect-square rounded-full bg-gray-400" />
+        <img
+          className="size-10 aspect-square"
+          src={faviconURL(bookmarks.url || "")}
+          alt={bookmarks.title}
+        />
+
         <div className="text-xl truncate">{bookmarks.title}</div>
       </a>
       {fav && (

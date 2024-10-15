@@ -2,7 +2,7 @@ import { FunctionComponent, ReactNode } from "react";
 import CustomThemeProvider from "./theme/provider";
 import { Provider } from "react-redux";
 import { store } from "./reducer/store";
-import { CssBaseline } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 
 interface EverythingProviderProps {
   children: ReactNode;

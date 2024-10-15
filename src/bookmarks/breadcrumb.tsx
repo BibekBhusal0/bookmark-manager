@@ -1,7 +1,7 @@
 import { StateType } from "@reducer/store";
 import { useDispatch, useSelector } from "react-redux";
 import { findBookmark } from "./main";
-import { Breadcrumbs } from "@mui/material";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { changeCurrentFolder } from "@reducer/mainSlice";
 
 const findPathToRoot = (

@@ -14,9 +14,7 @@ export async function getBookmarks(): Promise<
   chrome.bookmarks.BookmarkTreeNode[]
 > {
   try {
-    const response = await fetch("../src/data/chrome.json");
-    const data = await response.json();
-    return data as chrome.bookmarks.BookmarkTreeNode[];
+    return chrome.bookmarks.getTree();
   } catch (error) {
     console.log(error);
     return [];
@@ -55,7 +53,7 @@ function App() {
         </>
       }
       containerProps={{ className: "size-full h-screen" }}
-      contentContainerProps={{ className: "h-screen gap-0" }}
+      contentContainerProps={{ className: "h-screen gap-0 pl-4" }}
       //
     >
       <MainBookmarks bookmarks={bookmarks} />
@@ -69,16 +67,18 @@ function FavButton() {
     (state: StateType) => state.bookmarkReducer
   );
   return (
-    <Button
-      sx={{ marginX: "auto", marginY: "1rem" }}
-      className="transition-all"
-      variant={showFavorites ? "outlined" : "contained"}
-      onClick={() => dispatch(toggleShowFavorites())}>
-      <div className="text-2xl flex-center gap-2">
-        <Icon icon="mdi:heart-outline" />
-        <div>{showFavorites ? "Hide " : "Show "} All Favorites</div>
-      </div>
-    </Button>
+    <div className="flex-center w-full">
+      <Button
+        sx={{ marginX: "auto", marginY: "1rem" }}
+        className="transition-all"
+        variant={showFavorites ? "outlined" : "contained"}
+        onClick={() => dispatch(toggleShowFavorites())}>
+        <div className="text-xl flex-center gap-2">
+          <Icon icon="mdi:heart-outline" />
+          <div>{showFavorites ? "Hide " : "Show "} All Favorites</div>
+        </div>
+      </Button>
+    </div>
   );
 }
 export default App;

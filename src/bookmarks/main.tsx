@@ -12,6 +12,7 @@ import { cn } from "@lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { AddFavoriteContextMenu } from "@components/contextMenu";
 import BookmarkBreadcrumb from "./breadcrumb";
+import { faviconURL } from "@src/lib/fabiconURL";
 
 const folderSizeMapping: Record<folderSizes, number> = {
   small: 80,
@@ -57,8 +58,9 @@ function MainBookmarks({
       if (divRef?.current) {
         const totalWidth = divRef.current.offsetWidth;
         const numItems = Math.floor((totalWidth + gap) / (itemWidth + gap));
-        const finalWidth = numItems * (itemWidth + gap);
+        const finalWidth = numItems * (itemWidth + gap) - gap;
         setWidth(finalWidth);
+        console.log(finalWidth);
       }
     };
     const observer = new ResizeObserver(handleResize);
@@ -74,15 +76,18 @@ function MainBookmarks({
     return findBookmark(bookmarks, currentFolderID)?.children;
   };
   const currentBookmarks = getBookmarks();
-  if (!currentBookmarks) return null;
 
   const content =
-    currentBookmarks.length === 0 ? (
+    !currentBookmarks || currentBookmarks.length === 0 ? (
       <div className="text-center text-3xl pt-4">
         No bookmarks in {showFavorites ? "Favorites" : "this folder"}
       </div>
     ) : (
-      <div className={cn("flex flex-wrap mx-auto w-full")} style={{ gap }}>
+      <div
+        className={cn("flex flex-wrap mx-auto w-full")}
+        style={{ gap }}
+        //
+      >
         <Bookmarks bookmarks={currentBookmarks} />
       </div>
     );
@@ -92,12 +97,11 @@ function MainBookmarks({
       ref={divRef}
       style={{
         maxHeight: `calc(100vh - 80px - ${gap}px)`,
-        marginTop: gap,
-        paddingBottom: "30px",
+        // margin: `${gap}px 0 0 ${gap}px`,
       }}
-      className="size-full overflow-auto styled-scrollbar">
-      <div style={{ maxWidth: width }} className="mx-auto py-4 sticky">
-        <div className="py-4 sticky">
+      className="size-full overflow-auto styled-scrollbar pb-8">
+      <div style={{ maxWidth: width }} className="mx-auto">
+        <div className="py-4">
           <BookmarkBreadcrumb bookmarks={bookmarks} />
         </div>
         {content}
@@ -135,7 +139,11 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
   ) : (
     <AddFavoriteContextMenu added={fav} addItem={toggleItem}>
       <a className={cn(cls)} href={bookmarks.url} target="_blank">
-        <div className="size-1/2 aspect-square rounded-full bg-gray-400" />
+        <img
+          className="size-1/2 aspect-square"
+          src={faviconURL(bookmarks.url || "")}
+          alt={bookmarks.title}
+        />
         <div className="flex items-center justify-between w-full">
           {fav && <Icon className="text-2xl" icon="mdi:heart" />}
           <div className={cn(textCls)}>{bookmarks.title}</div>

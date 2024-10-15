@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { cn } from "@lib/utils";
-import { useTheme } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 interface FolderProps {
   open?: boolean;

@@ -4,8 +4,7 @@ import { useState } from "react";
 import { ResizableBox, ResizableBoxProps } from "react-resizable";
 import { cn } from "@src/lib/utils";
 import Box, { BoxProps } from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
-import { emphasize } from "@mui/material/styles";
+import { useTheme, emphasize } from "@mui/material/styles";
 
 export type SidebarProps = {
   resizableBoxProps?: Partial<ResizableBoxProps>;
