@@ -19,9 +19,16 @@
     "paths": {
       "@src/*": ["src/*"],
       "@assets/*": ["src/assets/*"],
-      "@pages/*": ["src/pages/*"]
+      "@reducer/*": ["src/reducer/*"],
+      "@lib/*": ["src/lib/*"],
+      "@theme/*": ["src/theme/*"],
+      "@components/*": ["src/components/*"],
+      "@bookmarks/*": ["src/bookmarks/*"],
+      "@pages/*": ["src/pages/*"],
+      "@newtab/*": ["src/pages/newtab/*"],
+      "@options/*": ["src/pages/options/*"],
+      "@popup/*": ["src/pages/popup/*"]
     }
   },
-  "include": ["src",
-    "utils", "vite.config.ts"],
+  "include": ["src", "utils", "vite.config.ts"]
 }

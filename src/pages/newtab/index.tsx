@@ -1,12 +1,17 @@
 import { createRoot } from "react-dom/client";
 import Newtab from "@pages/newtab/Newtab";
 import "@assets/styles/tailwind.css";
+import EverythingProvider from "@src/everythingProvider";
 
 function init() {
   const rootContainer = document.querySelector("#__root");
   if (!rootContainer) throw new Error("Can't find Newtab root element");
   const root = createRoot(rootContainer);
-  root.render(<Newtab />);
+  root.render(
+    <EverythingProvider>
+      <Newtab />
+    </EverythingProvider>
+  );
 }
 
 init();

@@ -49,7 +49,15 @@ export default defineConfig({
     alias: {
       "@src": root,
       "@assets": assetsDir,
+      "@reducer": resolve(root, "reducer"),
+      "@lib": resolve(root, "lib"),
+      "@theme": resolve(root, "theme"),
+      "@components": resolve(root, "components"),
+      "@bookmarks": resolve(root, "bookmarks"),
       "@pages": pagesDir,
+      "@newtab": resolve(pagesDir, "newtab"),
+      "@popup": resolve(pagesDir, "popup"),
+      "@options": resolve(pagesDir, "options"),
     },
   },
   plugins: [
