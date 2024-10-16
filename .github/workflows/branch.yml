@@ -31,7 +31,7 @@ jobs:
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
           git checkout -b build-artifacts
-          git rm -rf . # Remove all files from the branch
+          git ls-files | xargs git rm -f # Remove all files from the branch
           git add -f dist
           git commit -m "Add built extension artifacts"
           git config pull.rebase false
