@@ -1,4 +1,4 @@
-name: Build Extension in different branch
+name: Build Extension in New Branch
 
 on:
   workflow_dispatch:
@@ -26,29 +26,25 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Create or update branch with dist files
+      - name: Create a new branch for artifacts
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git checkout -b build-artifacts
+          git rm -rf . # Remove all files from the branch
+          git add -f dist
+          git commit -m "Add built extension artifacts"
 
-          # Check if the branch already exists
-          if git show-ref --verify --quiet refs/heads/build-extension-branch; then
-            git checkout build-extension-branch
-          else
-            git checkout -b build-extension-branch
-          fi
+          # Pull the latest changes from the remote branch
+          git pull origin build-artifacts --rebase
 
-          # Check if dist directory contains files
-          if [ -d dist ] && [ "$(ls -A dist)" ]; then
-            # Clear existing files and copy new ones
-            rm -rf dist/*
-            cp -r dist/* dist/
-            git add dist/*
-            git commit -m "Update built extension artifacts" || echo "No changes to commit"
-          else
-            echo "No files found in dist directory, skipping commit."
-          fi
-      - name: Push to new branch
+          # Push the changes
+          git push origin build-artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: git push origin build-extension-branch --force
+
+      - name: Upload extension artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: vite-web-extension
+          path: dist
