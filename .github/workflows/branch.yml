@@ -36,7 +36,7 @@ jobs:
           git commit -m "Add built extension artifacts"
 
           # Pull the latest changes from the remote branch
-          git pull origin build-artifacts --rebase
+          git pull origin build-artifacts --no-rebase
 
           # Push the changes
           git push origin build-artifacts
