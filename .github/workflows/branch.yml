@@ -1,4 +1,4 @@
-name: Build and Zip Extension
+name: Build Extension in different branch
 
 on:
   workflow_dispatch:
