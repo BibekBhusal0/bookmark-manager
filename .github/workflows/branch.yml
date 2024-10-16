@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: yarn build
 
-     - name: Commit built artifacts
+    - name: Commit built artifacts
        run: |
          git config --local user.name "github-actions"
          git config --local user.email "github-actions@github.com"
@@ -41,3 +41,10 @@ jobs:
          git push origin build-artifacts
        env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Upload extension artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: vite-web-extension
+          path: dist
