@@ -38,14 +38,16 @@ jobs:
             git checkout -b build-extension-branch
           fi
 
-          # Clear the existing dist files in the branch
-          rm -rf dist/*
-
-          # Copy built files to the dist directory
-          cp -r dist/* dist/
-          git add dist/*
-          git commit -m "Update built extension artifacts" || echo "No changes to commit"
-
+          # Check if dist directory contains files
+          if [ -d dist ] && [ "$(ls -A dist)" ]; then
+            # Clear existing files and copy new ones
+            rm -rf dist/*
+            cp -r dist/* dist/
+            git add dist/*
+            git commit -m "Update built extension artifacts" || echo "No changes to commit"
+          else
+            echo "No files found in dist directory, skipping commit."
+          fi
       - name: Push to new branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
