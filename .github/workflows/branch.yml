@@ -34,6 +34,7 @@ jobs:
           git rm -rf . # Remove all files from the branch
           git add -f dist
           git commit -m "Add built extension artifacts"
+          git config pull.rebase false
 
           # Pull the latest changes from the remote branch
               git pull origin build-artifacts --allow-unrelated-histories
