@@ -26,19 +26,18 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Create a new branch for artifacts
-        run: |
-          git config --local user.name "github-actions"
-          git config --local user.email "github-actions@github.com"
-          git checkout -b build-artifacts
-          git add -f dist
-          git commit -m "Add built extension artifacts"
-          git push origin build-artifacts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+     - name: Commit built artifacts
+       run: |
+         git config --local user.name "github-actions"
+         git config --local user.email "github-actions@github.com"
+         git checkout -b build-artifacts
 
-      - name: Upload extension artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: vite-web-extension
-          path: dist
+         # Fetch latest changes from the remote
+         git fetch origin build-artifacts
+         git merge origin/build-artifacts || true  # Ignore merge conflicts
+
+         git add -f dist
+         git commit -m "Add built extension artifacts" || echo "No changes to commit"
+         git push origin build-artifacts
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
