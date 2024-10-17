@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@reducer/store";
-import { toggleShowFavorites } from "@reducer/mainSlice";
+import { removeFavorite, toggleShowFavorites } from "@reducer/mainSlice";
 import BookmarkSearch from "@src/bookmarks/search";
 import { setAllBookmarks } from "@src/reducer/allBookmark";
 
@@ -26,7 +26,10 @@ function App() {
     fetchBookmarks();
 
     const onBookmarkCreated = () => fetchBookmarks();
-    const onBookmarkRemoved = () => fetchBookmarks();
+    const onBookmarkRemoved = (id: string) => {
+      fetchBookmarks();
+      dispatch(removeFavorite(id));
+    };
     const onBookmarkChanged = () => fetchBookmarks();
 
     chrome.bookmarks.onCreated.addListener(onBookmarkCreated);

@@ -39,7 +39,11 @@ function BookmarkTreeLink({
   const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));
 
   return (
-    <LinkContextMenu id={bookmarks.id}>
+    <LinkContextMenu
+      id={bookmarks.id}
+      containerProps={{
+        className: "flex items-center gap-4",
+      }}>
       <a
         style={{ width: fav ? `calc(100% - 46px)` : "100%" }}
         className="flex items-center gap-4 my-4"

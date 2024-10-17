@@ -4,7 +4,7 @@ import { findBookmark } from "./main";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { changeCurrentFolder } from "@reducer/mainSlice";
 
-export const findPathToRoot = (
+const getPathRoot = (
   bookmarks: chrome.bookmarks.BookmarkTreeNode[],
   id: string
 ) => {
@@ -16,12 +16,20 @@ export const findPathToRoot = (
   if (!parentID) return path;
   const parent = findBookmark(bookmarks, parentID);
   if (parent) {
-    const parentPath = findPathToRoot(bookmarks, parentID);
+    const parentPath = getPathRoot(bookmarks, parentID);
     path.push(...parentPath);
   }
   return path;
 };
 
+export const findPath = (
+  bookmarks: chrome.bookmarks.BookmarkTreeNode[],
+  id: string
+) => {
+  const path = getPathRoot(bookmarks, id).reverse();
+  path.shift();
+  return path || [];
+};
 function BookmarkBreadcrumb() {
   const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
 
@@ -32,8 +40,7 @@ function BookmarkBreadcrumb() {
   const dispatch = useDispatch();
 
   if (showFavorites) return <div className={cls}> Favorites </div>;
-  const path = findPathToRoot(bookmarks, currentFolderID).reverse();
-  path.shift();
+  const path = findPath(bookmarks, currentFolderID);
 
   return (
     <Breadcrumbs>
