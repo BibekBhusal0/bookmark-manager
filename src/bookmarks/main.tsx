@@ -12,7 +12,7 @@ import { cn } from "@lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { AddFavoriteContextMenu } from "@components/contextMenu";
 import BookmarkBreadcrumb from "./breadcrumb";
-import { faviconURL } from "@src/lib/fabiconURL";
+import { faviconURL } from "@src/lib/faviconURL";
 
 const folderSizeMapping: Record<folderSizes, number> = {
   small: 80,
@@ -60,7 +60,6 @@ function MainBookmarks({
         const numItems = Math.floor((totalWidth + gap) / (itemWidth + gap));
         const finalWidth = numItems * (itemWidth + gap) - gap;
         setWidth(finalWidth);
-        console.log(finalWidth);
       }
     };
     const observer = new ResizeObserver(handleResize);
@@ -97,7 +96,6 @@ function MainBookmarks({
       ref={divRef}
       style={{
         maxHeight: `calc(100vh - 80px - ${gap}px)`,
-        // margin: `${gap}px 0 0 ${gap}px`,
       }}
       className="size-full overflow-auto styled-scrollbar pb-8">
       <div style={{ maxWidth: width }} className="mx-auto">
@@ -141,7 +139,7 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
       <a className={cn(cls)} href={bookmarks.url} target="_blank">
         <img
           className="size-1/2 aspect-square"
-          src={faviconURL(bookmarks.url || "")}
+          src={faviconURL(bookmarks.url || "", size)}
           alt={bookmarks.title}
         />
         <div className="flex items-center justify-between w-full">

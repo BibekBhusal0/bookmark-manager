@@ -9,7 +9,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { faviconURL } from "@src/lib/fabiconURL";
+import { faviconURL } from "@src/lib/faviconURL";
 
 export interface TakeBookmarksProps {
   bookmarks:

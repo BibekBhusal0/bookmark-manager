@@ -9,6 +9,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@reducer/store";
 import { toggleShowFavorites } from "@reducer/mainSlice";
+import BookmarkSearch from "@src/bookmarks/search";
 
 export async function getBookmarks(): Promise<
   chrome.bookmarks.BookmarkTreeNode[]
@@ -47,7 +48,7 @@ function App() {
       headerProps={{ className: "relative h-20" }}
       header={
         <>
-          <div className="w-1/2 rounded-full bg-green-400 bg-opacity-60 h-full" />
+          <BookmarkSearch />
           <ThemeSwitch />
           <SelectSize />
         </>
