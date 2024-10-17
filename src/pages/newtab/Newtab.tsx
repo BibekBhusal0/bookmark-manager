@@ -16,11 +16,29 @@ function App() {
   const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const fetchBookmarks = () => {
     chrome.bookmarks.getTree().then((data) => {
       dispatch(setAllBookmarks(data));
     });
+  };
+
+  useEffect(() => {
+    fetchBookmarks();
+
+    const onBookmarkCreated = () => fetchBookmarks();
+    const onBookmarkRemoved = () => fetchBookmarks();
+    const onBookmarkChanged = () => fetchBookmarks();
+
+    chrome.bookmarks.onCreated.addListener(onBookmarkCreated);
+    chrome.bookmarks.onRemoved.addListener(onBookmarkRemoved);
+    chrome.bookmarks.onChanged.addListener(onBookmarkChanged);
+    return () => {
+      chrome.bookmarks.onCreated.removeListener(onBookmarkCreated);
+      chrome.bookmarks.onRemoved.removeListener(onBookmarkRemoved);
+      chrome.bookmarks.onChanged.removeListener(onBookmarkChanged);
+    };
   }, []);
+
   if (!bookmarks || bookmarks.length === 0) return <ThemeSwitch />;
 
   return (
