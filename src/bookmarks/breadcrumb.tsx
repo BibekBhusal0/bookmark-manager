@@ -4,7 +4,7 @@ import { findBookmark } from "./main";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { changeCurrentFolder } from "@reducer/mainSlice";
 
-const findPathToRoot = (
+export const findPathToRoot = (
   bookmarks: chrome.bookmarks.BookmarkTreeNode[],
   id: string
 ) => {
