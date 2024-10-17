@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Bookmark Manager",
+  "description": "Manage your bookmarks .",
+  "options_page": "src/pages/options/index.html",
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": {
+      "32": "icon-32.png"
+    }
+  },
+  "chrome_url_overrides": {
+    "newtab": "src/pages/newtab/index.html"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "permissions": [
+    "bookmarks",
+    "favicon",
+    "storage"
+  ],
+  "version": "0.0.0"
+}

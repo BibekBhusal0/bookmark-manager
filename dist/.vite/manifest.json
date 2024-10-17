@@ -1,0 +1,46 @@
+{
+  "../../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-CqsB0E5l.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_tailwind-!~{004}~.js": {
+    "file": "assets/tailwind-C1zZADQl.css",
+    "src": "_tailwind-!~{004}~.js"
+  },
+  "_tailwind-aPQHeZ-c.js": {
+    "file": "assets/tailwind-aPQHeZ-c.js",
+    "name": "tailwind",
+    "css": [
+      "assets/tailwind-C1zZADQl.css"
+    ]
+  },
+  "src/pages/newtab/index.html": {
+    "file": "assets/index.html-BUr31q4p.js",
+    "name": "index.html",
+    "src": "src/pages/newtab/index.html",
+    "isEntry": true,
+    "imports": [
+      "_tailwind-aPQHeZ-c.js"
+    ]
+  },
+  "src/pages/options/index.html": {
+    "file": "assets/index.html-f7DDvoU8.js",
+    "name": "index.html",
+    "src": "src/pages/options/index.html",
+    "isEntry": true,
+    "imports": [
+      "_tailwind-aPQHeZ-c.js"
+    ]
+  },
+  "src/pages/popup/index.html": {
+    "file": "assets/index.html-CIjjFTW-.js",
+    "name": "index.html",
+    "src": "src/pages/popup/index.html",
+    "isEntry": true,
+    "imports": [
+      "_tailwind-aPQHeZ-c.js"
+    ]
+  }
+}
