@@ -10,14 +10,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faviconURL } from "@src/lib/faviconURL";
+import { TakeBookmarksProps } from "@src/reducer/allBookmark";
 
-export interface TakeBookmarksProps {
-  bookmarks:
-    | chrome.bookmarks.BookmarkTreeNode[]
-    | chrome.bookmarks.BookmarkTreeNode;
-}
-
-function BookmarkTree({ bookmarks }: TakeBookmarksProps) {
+function BookmarkTree() {
+  const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
   return <BookmarkItem bookmarks={bookmarks} />;
 }
 

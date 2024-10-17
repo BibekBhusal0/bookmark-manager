@@ -31,17 +31,23 @@ export const bookmarkSlice = createSlice({
     },
     changeCurrentFolder: (state, action: PayloadAction<string>) => {
       state.currentFolderID = action.payload;
+      state.showFavorites = false;
     },
     changeFolderSize: (state, action: PayloadAction<folderSizes>) => {
       state.folderSize = action.payload;
-    }, toggleShowFavorites : (state) =>{
-        state.showFavorites = !state.showFavorites
-    }
+    },
+    toggleShowFavorites: (state) => {
+      state.showFavorites = !state.showFavorites;
+    },
     //   changePined : (state, action:PayloadAction<string>) =>{
   },
 });
 
-export const { toggleFavorites, changeCurrentFolder, changeFolderSize , toggleShowFavorites } =
-  bookmarkSlice.actions;
+export const {
+  toggleFavorites,
+  changeCurrentFolder,
+  changeFolderSize,
+  toggleShowFavorites,
+} = bookmarkSlice.actions;
 
 export default bookmarkSlice.reducer;

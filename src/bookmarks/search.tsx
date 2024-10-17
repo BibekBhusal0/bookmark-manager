@@ -6,15 +6,12 @@ import {
   useState,
 } from "react";
 import TextField from "@mui/material/TextField";
-import { getBookmarks } from "@src/pages/newtab/Newtab";
 import { findPathToRoot } from "./breadcrumb";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@src/reducer/store";
 import { Icon } from "@iconify/react";
 import { faviconURL } from "@src/lib/faviconURL";
 import { Breadcrumbs } from "@mui/material";
-
-// const allBookmarks = getBookmarks();
 
 function BookmarkSearch() {
   const [searchTerm, setSearchTerm] = useState("");

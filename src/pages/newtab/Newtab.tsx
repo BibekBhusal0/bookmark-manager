@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Sidebar from "@components/sidebar";
 import BookmarkTree from "@bookmarks/tree";
 import ThemeSwitch from "@theme/switch";
@@ -10,26 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@reducer/store";
 import { toggleShowFavorites } from "@reducer/mainSlice";
 import BookmarkSearch from "@src/bookmarks/search";
-
-export async function getBookmarks(): Promise<
-  chrome.bookmarks.BookmarkTreeNode[]
-> {
-  try {
-    return chrome.bookmarks.getTree();
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
+import { setAllBookmarks } from "@src/reducer/allBookmark";
 
 function App() {
-  const [bookmarks, setBookmarks] = useState<
-    chrome.bookmarks.BookmarkTreeNode[]
-  >([]);
+  const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (bookmarks.length !== 0) return;
-    getBookmarks().then((data) => {
-      setBookmarks(data);
+    chrome.bookmarks.getTree().then((data) => {
+      dispatch(setAllBookmarks(data));
     });
   }, []);
   if (!bookmarks || bookmarks.length === 0) return <ThemeSwitch />;
@@ -41,7 +30,7 @@ function App() {
         children: (
           <div className="overflow-x-hidden overflow-y-auto h-screen px-4 styled-scrollbar">
             <FavButton />
-            <BookmarkTree bookmarks={bookmarks} />
+            <BookmarkTree />
           </div>
         ),
       }}
@@ -55,10 +44,8 @@ function App() {
       }
       containerProps={{ className: "size-full h-screen" }}
       contentContainerProps={{ className: "h-screen gap-0 pl-4" }}
-      //
-    >
-      <MainBookmarks bookmarks={bookmarks} />
-    </Sidebar>
+      children={<MainBookmarks />}
+    />
   );
 }
 

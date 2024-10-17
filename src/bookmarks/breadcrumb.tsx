@@ -22,11 +22,9 @@ export const findPathToRoot = (
   return path;
 };
 
-function BookmarkBreadcrumb({
-  bookmarks,
-}: {
-  bookmarks: chrome.bookmarks.BookmarkTreeNode[];
-}) {
+function BookmarkBreadcrumb() {
+  const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
+
   const { currentFolderID, showFavorites } = useSelector(
     (state: StateType) => state.bookmarkReducer
   );

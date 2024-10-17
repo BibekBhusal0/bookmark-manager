@@ -1,6 +1,6 @@
 import { StateType } from "@reducer/store";
 import { useDispatch, useSelector } from "react-redux";
-import { TakeBookmarksProps } from "./tree";
+import { TakeBookmarksProps } from "@reducer/allBookmark";
 import {
   changeCurrentFolder,
   folderSizes,
@@ -37,11 +37,8 @@ export function findBookmark(
   }
 }
 
-function MainBookmarks({
-  bookmarks,
-}: {
-  bookmarks: chrome.bookmarks.BookmarkTreeNode[];
-}) {
+function MainBookmarks() {
+  const { bookmarks } = useSelector((state: StateType) => state.allBookmarks);
   const { currentFolderID, folderSize, showFavorites, favorites } = useSelector(
     (state: StateType) => state.bookmarkReducer
   );
@@ -100,7 +97,7 @@ function MainBookmarks({
       className="size-full overflow-auto styled-scrollbar pb-8">
       <div style={{ maxWidth: width }} className="mx-auto">
         <div className="py-4">
-          <BookmarkBreadcrumb bookmarks={bookmarks} />
+          <BookmarkBreadcrumb />
         </div>
         {content}
       </div>
