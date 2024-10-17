@@ -66,12 +66,12 @@ const Link: FunctionComponent<LinkProps> = ({ link }) => {
   >([]);
 
   const { title, url, id } = link;
-  //   allBookmarks.then((b) => setBookmarks(b));
+  const cls = "w-10 aspect-square";
   const path = findPathToRoot(bookmarks, id);
   const icon = url ? (
-    <img className="w-full aspect-square" src={faviconURL(url)} />
+    <img className={cls} src={faviconURL(url)} />
   ) : (
-    <Icon className="w-full aspect-square" icon="ic:round-folder" />
+    <Icon className={cls} icon="ic:round-folder" />
   );
 
   return (
@@ -87,15 +87,12 @@ const Link: FunctionComponent<LinkProps> = ({ link }) => {
         href={url || "#"}
         target={url ? "_blank" : "_self"}
         className="flex gap-4 items-center text-xl">
-        <div className="w-10">{icon}</div>
+        {icon}
         <div className="text-xl truncate">{title}</div>
         {favorites.includes(id) && (
           <>
             <div className="flex-grow"></div>
-            <Icon
-              className="text-2xl self-end"
-              icon="material-symbols:favorite"
-            />
+            <Icon className="text-2xl" icon="mdi:heart" />
           </>
         )}
       </a>
