@@ -10,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import { Icon } from "@iconify/react";
 import { cn } from "@lib/utils";
 import { useEffect, useRef, useState } from "react";
-import { AddFavoriteContextMenu } from "@components/contextMenu";
+import { LinkContextMenu } from "@components/contextMenu";
 import BookmarkBreadcrumb from "./breadcrumb";
 import { faviconURL } from "@src/lib/faviconURL";
 
@@ -120,7 +120,6 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
   const cls = "flex-center flex-col gap-4 size-full relative p-1";
   const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
-  const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));
 
   const content = bookmarks.children ? (
     <div
@@ -132,7 +131,7 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
       <div className={cn(textCls)}>{bookmarks.title}</div>
     </div>
   ) : (
-    <AddFavoriteContextMenu added={fav} addItem={toggleItem}>
+    <LinkContextMenu id={bookmarks.id}>
       <a className={cn(cls)} href={bookmarks.url} target="_blank">
         <img
           className="size-1/2 aspect-square"
@@ -144,7 +143,7 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
           <div className={cn(textCls)}>{bookmarks.title}</div>
         </div>
       </a>
-    </AddFavoriteContextMenu>
+    </LinkContextMenu>
   );
 
   return (

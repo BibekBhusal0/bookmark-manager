@@ -1,4 +1,4 @@
-import { AddFavoriteContextMenu } from "@components/contextMenu";
+import { LinkContextMenu } from "@components/contextMenu";
 import Folder from "@components/folder";
 import { changeCurrentFolder, toggleFavorites } from "@reducer/mainSlice";
 import { StateType } from "@reducer/store";
@@ -39,12 +39,7 @@ function BookmarkTreeLink({
   const toggleItem = () => dispatch(toggleFavorites(bookmarks.id));
 
   return (
-    <AddFavoriteContextMenu
-      containerProps={{
-        className: "flex items-center gap-4",
-      }}
-      added={fav}
-      addItem={toggleItem}>
+    <LinkContextMenu id={bookmarks.id}>
       <a
         style={{ width: fav ? `calc(100% - 46px)` : "100%" }}
         className="flex items-center gap-4 my-4"
@@ -63,7 +58,7 @@ function BookmarkTreeLink({
           <Icon className="text-3xl" icon="mdi:heart" />
         </IconButton>
       )}
-    </AddFavoriteContextMenu>
+    </LinkContextMenu>
   );
 }
 
