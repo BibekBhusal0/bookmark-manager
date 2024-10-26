@@ -27,19 +27,16 @@ function BookmarkSearch() {
   }, [deferredSearchTerm]);
 
   const handleChange = (
-    event: React.SyntheticEvent<Element, Event>,
-    option: string | null
+    _: React.SyntheticEvent<Element, Event>,
+    bookmark: chrome.bookmarks.BookmarkTreeNode | null
   ) => {
-    setSearchTerm("");
-    if (option === null) return;
-    const id = option.split(" ")[0];
-    const bookmark = searchedBookmarks.find((b) => b.id === id);
     if (!bookmark) return;
     if (bookmark.url) {
       window.open(bookmark.url, "_blank");
     } else {
       dispatch(changeCurrentFolder(bookmark.id));
     }
+    setSearchTerm("");
   };
 
   return (
@@ -47,12 +44,10 @@ function BookmarkSearch() {
       fullWidth
       inputValue={searchTerm}
       onInputChange={(_, value) => setSearchTerm(value || "")}
-      value={searchTerm}
+      getOptionLabel={(bookmark) => bookmark.title}
       onChange={handleChange}
-      options={searchedBookmarks.map((b) => `${b.id} ${b.title}`)}
-      renderOption={(props, option) => {
-        const id = option.split(" ")[0];
-        const bookmark = searchedBookmarks.find((b) => b.id === id);
+      options={searchedBookmarks}
+      renderOption={(props, bookmark) => {
         if (!bookmark) return null;
         return (
           <li {...props}>
@@ -63,8 +58,7 @@ function BookmarkSearch() {
       renderInput={(props) => (
         <TextField {...props} placeholder="Search Bookmarks" />
       )}
-      //
-    ></Autocomplete>
+    />
   );
 }
 
