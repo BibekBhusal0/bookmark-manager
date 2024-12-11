@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import Sidebar from "@components/sidebar";
 import BookmarkTree from "@bookmarks/tree";
-import ThemeSwitch from "@theme/switch";
 import MainBookmarks from "@bookmarks/main";
 import SelectSize from "@bookmarks/size";
-import Button from "@mui/material/Button";
+import { Button } from "@nextui-org/button";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@reducer/store";
@@ -42,7 +41,7 @@ function App() {
     };
   }, []);
 
-  if (!bookmarks || bookmarks.length === 0) return <ThemeSwitch />;
+  if (!bookmarks || bookmarks.length === 0) return null;
 
   return (
     <Sidebar
@@ -59,11 +58,12 @@ function App() {
       header={
         <>
           <BookmarkSearch />
-          <ThemeSwitch />
           <SelectSize />
         </>
       }
-      containerProps={{ className: "size-full h-screen" }}
+      containerProps={{
+        className: "size-full h-screen dark text-foreground bg-background",
+      }}
       contentContainerProps={{ className: "h-screen gap-0 pl-4" }}
       children={<MainBookmarks />}
     />
@@ -78,10 +78,10 @@ function FavButton() {
   return (
     <div className="flex-center w-full">
       <Button
-        sx={{ marginX: "auto", marginY: "1rem" }}
+        // sx={{ marginX: "auto", marginY: "1rem" }}
         className="transition-all"
-        variant={showFavorites ? "outlined" : "contained"}
-        onClick={() => dispatch(toggleShowFavorites())}>
+        variant={showFavorites ? "bordered" : "solid"}
+        onPress={() => dispatch(toggleShowFavorites())}>
         <div className="text-xl flex-center gap-2">
           <Icon icon="mdi:heart-outline" />
           <div>{showFavorites ? "Hide " : "Show "} All Favorites</div>

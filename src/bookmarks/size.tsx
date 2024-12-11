@@ -1,44 +1,42 @@
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useDispatch, useSelector } from "react-redux";
-import { StateType } from "@reducer/store";
 import {
   allFolderSizes,
   changeFolderSize,
   folderSizes,
 } from "@reducer/mainSlice";
-import { useId } from "react";
+import { Select, SelectItem, SelectProps } from "@nextui-org/select";
+import { useDispatch, useSelector } from "react-redux";
+import { StateType } from "@src/reducer/store";
 
-export default function SelectSize() {
+export default function SelectSize({
+  boxProps,
+  ...props
+}: { boxProps?: JSX.IntrinsicElements["div"] } & Partial<SelectProps>) {
   const dispatch = useDispatch();
-  const id = useId();
   const { folderSize } = useSelector(
     (state: StateType) => state.bookmarkReducer
   );
-
-  const handleChange = (event: SelectChangeEvent) => {
-    dispatch(changeFolderSize(event.target.value as folderSizes));
-  };
-
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id={id}>Size</InputLabel>
-        <Select
-          labelId={id}
-          value={folderSize}
-          label="Size"
-          onChange={handleChange}>
-          {allFolderSizes.map((s) => (
-            <MenuItem className="capitalize" key={s} value={s}>
-              {s}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </Box>
+    <div {...boxProps} style={{ minWidth: 120, ...boxProps?.style }}>
+      <Select
+        label="Size"
+        size="sm"
+        {...props}
+        value={folderSize}
+        defaultSelectedKeys={[folderSize]}
+        classNames={{ value: "capitalize" }}
+        onChange={(s) => {
+          const val = s.target.value as folderSizes;
+          if (!allFolderSizes.includes(val)) return;
+          dispatch(changeFolderSize(val));
+        }}
+        //
+      >
+        {allFolderSizes.map((s) => (
+          <SelectItem className="capitalize" key={s} value={s}>
+            {s}
+          </SelectItem>
+        ))}
+      </Select>
+    </div>
   );
 }

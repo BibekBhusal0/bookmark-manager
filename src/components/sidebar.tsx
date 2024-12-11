@@ -1,16 +1,14 @@
 import { Icon } from "@iconify/react";
-import IconButton from "@mui/material/IconButton";
+import IconButton from "@src/components/iconButton";
 import { useState } from "react";
 import { ResizableBox, ResizableBoxProps } from "react-resizable";
-import { cn } from "@src/lib/utils";
-import Box, { BoxProps } from "@mui/material/Box";
-import { useTheme, emphasize } from "@mui/material/styles";
+import { cn } from "@nextui-org/theme";
 
 export type SidebarProps = {
   resizableBoxProps?: Partial<ResizableBoxProps>;
-  containerProps?: BoxProps;
-  contentContainerProps?: BoxProps;
-  headerProps?: BoxProps;
+  containerProps?: JSX.IntrinsicElements["div"];
+  contentContainerProps?: JSX.IntrinsicElements["div"];
+  headerProps?: JSX.IntrinsicElements["div"];
   showButton?: boolean;
   header?: React.ReactNode;
   children?: React.ReactNode;
@@ -25,12 +23,6 @@ export default function Sidebar({
   contentContainerProps,
   containerProps,
 }: SidebarProps) {
-  const {
-    palette: {
-      primary: { main },
-    },
-  } = useTheme();
-
   const [drawerWidth, setDrawerWidth] = useState(600);
   const minW = 150;
   const [open, setOpen] = useState(true);
@@ -40,15 +32,14 @@ export default function Sidebar({
   };
 
   return (
-    <Box
+    <div
       {...containerProps}
-      className={cn("flex size-full", containerProps?.className)}>
+      className={cn("flex size-full sidebar", containerProps?.className)}>
       <ResizableBox
         width={open ? drawerWidth : 0}
         height={Infinity}
         minConstraints={[0, 0]}
         maxConstraints={[600, Infinity]}
-        style={{ backgroundColor: emphasize(main, 0.7) }}
         axis="x"
         resizeHandles={["e"]}
         onResize={(e: any, { size }) => {
@@ -62,18 +53,16 @@ export default function Sidebar({
           resizableBoxProps?.className
         )}
       />
-      {/* {sidebarContent}
-      </ResizableBox> */}
-      <Box
+      <div
         {...contentContainerProps}
         className={cn(
           "flex flex-col gap-4 w-full transition-all",
           contentContainerProps?.className
         )}>
-        <Box
+        <div
           {...headerProps}
           className={cn(
-            "flex w-full items-center justify-between gap-4 p-4",
+            "flex w-full items-center justify-between gap-4 p-4 relative",
             headerProps?.className
           )}>
           {showButton && (
@@ -88,9 +77,9 @@ export default function Sidebar({
             </IconButton>
           )}
           {header}
-        </Box>
+        </div>
         {children}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

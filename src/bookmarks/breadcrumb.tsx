@@ -1,8 +1,8 @@
 import { StateType } from "@reducer/store";
 import { useDispatch, useSelector } from "react-redux";
 import { findBookmark } from "./main";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { changeCurrentFolder } from "@reducer/mainSlice";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 
 const getPathRoot = (
   bookmarks: chrome.bookmarks.BookmarkTreeNode[],
@@ -43,14 +43,14 @@ function BookmarkBreadcrumb() {
   const path = findPath(bookmarks, currentFolderID);
 
   return (
-    <Breadcrumbs>
+    <Breadcrumbs variant="light" underline="hover">
       {path.map((item, index) => (
-        <div
+        <BreadcrumbItem
           key={index}
           className={cls}
           onClick={() => dispatch(changeCurrentFolder(item.id))}>
           {item.title}
-        </div>
+        </BreadcrumbItem>
       ))}
     </Breadcrumbs>
   );

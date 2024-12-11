@@ -1,16 +1,16 @@
-import Autocomplete from "@mui/material/Autocomplete";
 import {
   FunctionComponent,
+  Key,
   useDeferredValue,
   useEffect,
   useState,
 } from "react";
-import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@src/reducer/store";
 import { Icon } from "@iconify/react";
 import { faviconURL } from "@src/lib/faviconURL";
 import { changeCurrentFolder } from "@src/reducer/mainSlice";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 
 function BookmarkSearch() {
   const dispatch = useDispatch();
@@ -26,10 +26,9 @@ function BookmarkSearch() {
     });
   }, [deferredSearchTerm]);
 
-  const handleChange = (
-    _: React.SyntheticEvent<Element, Event>,
-    bookmark: chrome.bookmarks.BookmarkTreeNode | null
-  ) => {
+  const handleChange = (e: Key | null) => {
+    if (!e) return;
+    const bookmark = searchedBookmarks.find((bookmark) => bookmark.id === e);
     if (!bookmark) return;
     if (bookmark.url) {
       window.open(bookmark.url, "_blank");
@@ -41,24 +40,23 @@ function BookmarkSearch() {
 
   return (
     <Autocomplete
-      fullWidth
-      inputValue={searchTerm}
-      onInputChange={(_, value) => setSearchTerm(value || "")}
-      getOptionLabel={(bookmark) => bookmark.title}
-      onChange={handleChange}
-      options={searchedBookmarks}
-      renderOption={(props, bookmark) => {
-        if (!bookmark) return null;
-        return (
-          <li {...props}>
-            <Link link={bookmark} />
-          </li>
-        );
-      }}
-      renderInput={(props) => (
-        <TextField {...props} placeholder="Search Bookmarks" />
+      value={searchTerm}
+      onValueChange={setSearchTerm}
+      onSelectionChange={handleChange}
+      items={searchedBookmarks}
+      defaultItems={searchedBookmarks}
+      placeholder="Search Bookmarks"
+      isClearable={false}
+      listboxProps={{
+        emptyContent:
+          searchTerm.trim() === "" ? "Search Something" : "No Bookmark Found",
+      }}>
+      {(bookmark: chrome.bookmarks.BookmarkTreeNode) => (
+        <AutocompleteItem key={bookmark.id}>
+          <Link link={bookmark} />
+        </AutocompleteItem>
       )}
-    />
+    </Autocomplete>
   );
 }
 

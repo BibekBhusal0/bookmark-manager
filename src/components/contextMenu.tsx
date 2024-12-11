@@ -1,73 +1,34 @@
-import Menu, { MenuProps } from "@mui/material/Menu";
-import Box, { BoxProps } from "@mui/material/Box";
-import { cn } from "@lib/utils";
-import { ReactNode, useState, MouseEvent } from "react";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import { ReactNode } from "react";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { StateType } from "@src/reducer/store";
 import { toggleFavorites } from "@src/reducer/mainSlice";
+import { ListboxItem, Listbox } from "@nextui-org/listbox";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuTrigger,
+} from "./contextMenuMain";
 
 export type contextMenuProps = {
   children?: ReactNode;
-  menuProps?: Partial<MenuProps>;
-  containerProps?: BoxProps;
+  menuProps?: JSX.IntrinsicElements["div"];
+  triggerProps?: JSX.IntrinsicElements["div"];
   menuContent?: ReactNode;
   closeOnClick?: boolean;
 };
 
-export default function ContextMenu({
+export default function SimpleContextMenu({
   menuProps,
-  containerProps,
+  triggerProps,
   menuContent,
   children,
-  closeOnClick = true,
 }: contextMenuProps) {
-  const [contextMenu, setContextMenu] = useState<{
-    mouseX: number;
-    mouseY: number;
-  } | null>(null);
-
-  const handleContextMenu = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setContextMenu(
-      contextMenu === null
-        ? {
-            mouseX: event.clientX + 2,
-            mouseY: event.clientY - 6,
-          }
-        : null
-    );
-  };
-
-  const handleClose = () => {
-    setContextMenu(null);
-  };
-
   return (
-    <Box
-      {...containerProps}
-      onContextMenu={handleContextMenu}
-      className={cn(
-        "cursor-context-menu size-full",
-        containerProps?.className
-      )}>
-      <Menu
-        {...menuProps}
-        open={contextMenu !== null}
-        onClick={closeOnClick ? handleClose : undefined}
-        onClose={handleClose}
-        anchorReference="anchorPosition"
-        anchorPosition={
-          contextMenu !== null
-            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
-            : undefined
-        }>
-        {menuContent}
-      </Menu>
-      {children}
-    </Box>
+    <ContextMenu>
+      <ContextMenuTrigger {...triggerProps}>{children}</ContextMenuTrigger>
+      <ContextMenuContent {...menuProps}>{menuContent}</ContextMenuContent>
+    </ContextMenu>
   );
 }
 
@@ -97,28 +58,23 @@ export function LinkContextMenu({ id, ...props }: AddFavProps) {
   ];
 
   return (
-    <ContextMenu
+    <SimpleContextMenu
       {...props}
       menuContent={
-        <>
+        <Listbox variant="bordered">
           {items.map(({ name, icon, onClick }) => {
-            const color = name === "Delete" ? "error.main" : "inherit";
             return (
-              <MenuItem
-                sx={{ color }}
-                className="flex-center gap-3"
+              <ListboxItem
+                color={name === "Delete" ? "danger" : "default"}
+                className={name === "Delete" ? "text-danger" : ""}
                 key={name}
-                onClick={onClick}>
-                <ListItemIcon sx={{ color }}>
-                  <Icon icon={icon} className="text-2xl" />
-                </ListItemIcon>
-                <Box sx={{ color }} className="text-xl">
-                  {name}
-                </Box>
-              </MenuItem>
+                onPress={onClick}
+                startContent={<Icon icon={icon} className="text-2xl" />}>
+                {name}
+              </ListboxItem>
             );
           })}
-        </>
+        </Listbox>
       }
     />
   );

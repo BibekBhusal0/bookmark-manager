@@ -1,18 +1,16 @@
 import { StateType } from "@reducer/store";
 import { useDispatch, useSelector } from "react-redux";
 import { TakeBookmarksProps } from "@reducer/allBookmark";
-import {
-  changeCurrentFolder,
-  folderSizes,
-  toggleFavorites,
-} from "@reducer/mainSlice";
-import Paper from "@mui/material/Paper";
+import { changeCurrentFolder, folderSizes } from "@reducer/mainSlice";
 import { Icon } from "@iconify/react";
 import { cn } from "@lib/utils";
 import { useEffect, useRef, useState } from "react";
 import { LinkContextMenu } from "@components/contextMenu";
 import BookmarkBreadcrumb from "./breadcrumb";
 import { faviconURL } from "@src/lib/faviconURL";
+import { Card, CardBody, CardFooter } from "@nextui-org/card";
+import { Image } from "@nextui-org/image";
+import { StyledCard } from "@src/components/card";
 
 const folderSizeMapping: Record<folderSizes, number> = {
   small: 80,
@@ -121,6 +119,7 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
   const textCls = "px-2 truncate w-full text-center";
   const fav = favorites.includes(bookmarks.id);
 
+  const title = <div className={cn(textCls)}>{bookmarks.title}</div>;
   const content = bookmarks.children ? (
     <div
       onClick={() => {
@@ -128,35 +127,35 @@ function Bookmarks({ bookmarks }: TakeBookmarksProps) {
       }}
       className={cn(cls, "gap-2")}>
       <Icon width={size * 0.7} icon="ic:round-folder" />
-      <div className={cn(textCls)}>{bookmarks.title}</div>
+      {title}
     </div>
   ) : (
-    <LinkContextMenu id={bookmarks.id}>
+    <LinkContextMenu
+      triggerProps={{ className: cn("size-full relative") }}
+      id={bookmarks.id}>
       <a className={cn(cls)} href={bookmarks.url} target="_blank">
         <img
-          className="size-1/2 aspect-square"
+          className="w-1/2 aspect-square"
           src={faviconURL(bookmarks.url || "", size)}
           alt={bookmarks.title}
         />
         <div className="flex items-center justify-between w-full">
           {fav && <Icon className="text-2xl" icon="mdi:heart" />}
-          <div className={cn(textCls)}>{bookmarks.title}</div>
+          {title}
         </div>
       </a>
     </LinkContextMenu>
   );
 
   return (
-    <Paper
+    <StyledCard
+      color="primary"
+      variant="flat"
       className="cursor-pointer"
-      variant="outlined"
-      sx={{
-        width: size,
-        height: size,
-        fontSize: size / 10,
-      }}>
+      style={{ width: size, height: size, fontSize: size / 10 }}
+      isPressable>
       {content}
-    </Paper>
+    </StyledCard>
   );
 }
 

@@ -12,7 +12,7 @@ Github Repository for Bookmark Manager Chrome extension.
 - [@crxjs/vite-plugin](https://crxjs.dev/vite-plugin)
 - [Tailwind CSS](https://tailwindcss.com/docs/configuration)
 - [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started)
-- [Material UI](https://mui.com/material-ui/getting-started/)
+- [NEXT UI](https://nextui.org/)
 
 ## Credit
 
